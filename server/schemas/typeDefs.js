@@ -5,17 +5,16 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     email: String
-    bookCount: Int
-    savedBooks: [Book]
+    savedPokemon: [pokeSchema]
   }
 
-  type Book {
-    bookId: ID!
-    authors: [String]
-    description: String
+  type PokemonCard {
+    pokeId: ID!
+    name: [String]
+    pokedex: Int
     image: String
-    link: String
-    title: String!
+    price: Int
+    comment: String
   }
 
   type Auth {
@@ -23,13 +22,12 @@ const typeDefs = gql`
     user: User
   }
 
-  input BookInput {
-    authors: [String]
-    description: String!
-    bookId: String!
+  input PokemonInput {
+    name: [String]
+    pokedex: Int
+    price: Int
     image: String
-    link: String
-    title: String!
+    comment: String
   }
 
   type Query {
@@ -39,8 +37,8 @@ const typeDefs = gql`
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    saveBook(bookData: BookInput!): User
-    removeBook(bookId: ID!): User
+    savePokemon(pokemonData: PokemonInput!): User
+    removePokemon(pokeId: ID!): User
   }
 `;
 
