@@ -44,7 +44,9 @@ const SearchPokemon = () => {
         name: pokemonCard.name || ["No name to display"],
         pokedex: pokemonCard.nationalPokedexNumbers,
         image: pokemonCard.images.small,
-        price: pokemonCard.cardmarket.prices.averageSellPrice || 0,
+        price: pokemonCard.cardmarket
+          ? pokemonCard.cardmarket.prices.averageSellPrice
+          : 0,
       }));
       console.log(pokemonData);
       setSearchedPokemon(pokemonData);
@@ -122,7 +124,7 @@ const SearchPokemon = () => {
         <Row>
           {searchedPokemon.map((pokemon) => {
             return (
-              <Col md="4" key={pokemon.bookId}>
+              <Col md="4" key={pokemon.pokemonId}>
                 <Card border="dark">
                   {pokemon.image ? (
                     <Card.Img
@@ -138,13 +140,15 @@ const SearchPokemon = () => {
                     {Auth.loggedIn() && (
                       <Button
                         disabled={savedPokemonIds?.some(
-                          (savedPokemonId) => savedPokemonId === pokemon.bookId
+                          (savedPokemonId) =>
+                            savedPokemonId === pokemon.pokemonId
                         )}
                         className="btn-block btn-info"
-                        onClick={() => handleSavePokemon(pokemon.bookId)}
+                        onClick={() => handleSavePokemon(pokemon.pokemonId)}
                       >
                         {savedPokemonIds?.some(
-                          (savedPokemonId) => savedPokemonId === pokemon.bookId
+                          (savedPokemonId) =>
+                            savedPokemonId === pokemon.pokemonId
                         )
                           ? "This pokemon has already been saved!"
                           : "Save this pokemon!"}

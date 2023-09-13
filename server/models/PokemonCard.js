@@ -26,6 +26,6 @@ const pokeSchema = new mongoose.Schema({
   },
 });
 
-const PokemonCard = mongoose.model("PokemonCard", pokeSchema);
+module.exports = pokeSchema;
 
-module.exports = PokemonCard;
+// module.exports = PokemonCard;
