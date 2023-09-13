@@ -42,11 +42,11 @@ const resolvers = {
       return { token, user };
     },
 
-    saveBook: async (parent, { bookData }, context) => {
+    savePokemon: async (parent, { pokemonData }, context) => {
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $push: { savedBooks: bookData } },
+          { $push: { savedPokemon: pokemonData } },
           { new: true }
         );
 
@@ -55,11 +55,11 @@ const resolvers = {
 
       throw new AuthenticationError("You need to be logged in!");
     },
-    removeBook: async (parent, { bookId }, context) => {
+    removePokemon: async (parent, { pokemonId }, context) => {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { savedBooks: { bookId } } },
+          { $pull: { savedPokemon: { pokemonId } } },
           { new: true }
         );
 

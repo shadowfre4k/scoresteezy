@@ -1,30 +1,32 @@
-export const getSavedBookIds = () => {
-  const savedBookIds = localStorage.getItem('saved_books')
-    ? JSON.parse(localStorage.getItem('saved_books'))
+export const getSavedPokemonIds = () => {
+  const savedPokemonIds = localStorage.getItem("saved_pokemon")
+    ? JSON.parse(localStorage.getItem("saved_pokemon"))
     : [];
 
-  return savedBookIds;
+  return savedPokemonIds;
 };
 
-export const saveBookIds = (bookIdArr) => {
-  if (bookIdArr.length) {
-    localStorage.setItem('saved_books', JSON.stringify(bookIdArr));
+export const savePokemonIds = (pokeIdArr) => {
+  if (pokeIdArr.length) {
+    localStorage.setItem("saved_pokemon", JSON.stringify(pokeIdArr));
   } else {
-    localStorage.removeItem('saved_books');
+    localStorage.removeItem("saved_pokemon");
   }
 };
 
-export const removeBookId = (bookId) => {
-  const savedBookIds = localStorage.getItem('saved_books')
-    ? JSON.parse(localStorage.getItem('saved_books'))
+export const removePokeId = (pokeIdArr) => {
+  const savedPokemonIds = localStorage.getItem("saved_pokemon")
+    ? JSON.parse(localStorage.getItem("saved_pokemon"))
     : null;
 
-  if (!savedBookIds) {
+  if (!savedPokemonIds) {
     return false;
   }
 
-  const updatedSavedBookIds = savedBookIds?.filter((savedBookId) => savedBookId !== bookId);
-  localStorage.setItem('saved_books', JSON.stringify(updatedSavedBookIds));
+  const updatedSavedPokemonIds = savedPokemonIds?.filter(
+    (savedPokemonIds) => savedPokemonIds !== pokeIdArr
+  );
+  localStorage.setItem("saved_pokemon", JSON.stringify(updatedSavedPokemonIds));
 
   return true;
 };

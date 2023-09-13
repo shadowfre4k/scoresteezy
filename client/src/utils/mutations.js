@@ -26,7 +26,7 @@ export const ADD_USER = gql`
 
 export const SAVE_POKEMON = gql`
   mutation savePokemon($pokemonData: PokemonInput!) {
-    saveBook(pokemonData: $pokemonData) {
+    savePokemon(pokemonData: $pokemonData) {
       _id
       username
       email

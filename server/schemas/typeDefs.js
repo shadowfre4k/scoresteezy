@@ -12,8 +12,8 @@ const typeDefs = gql`
     pokeId: ID!
     name: [String]
     pokedex: Int
+    price: Float
     image: String
-    price: Int
     comment: String
   }
 
@@ -25,7 +25,7 @@ const typeDefs = gql`
   input PokemonInput {
     name: [String]
     pokedex: Int
-    price: Int
+    price: Float
     image: String
     comment: String
   }
