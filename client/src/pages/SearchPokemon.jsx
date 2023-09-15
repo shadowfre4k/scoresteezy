@@ -39,16 +39,19 @@ const SearchPokemon = () => {
       if (!response.ok) {
         throw new Error("something went wrong!");
       }
-
+      // console.log(result);
       const pokemonData = result.data.map((pokemonCard) => ({
+        pokeId: pokemonCard.id,
         name: pokemonCard.name || ["No name to display"],
-        pokedex: pokemonCard.nationalPokedexNumbers,
+        pokedex: pokemonCard.nationalPokedexNumbers
+          ? pokemonCard.nationalPokedexNumbers[0]
+          : pokemonCard.nationalPokedexNumbers,
         image: pokemonCard.images.small,
         price: pokemonCard.cardmarket
           ? pokemonCard.cardmarket.prices.averageSellPrice
           : 0,
       }));
-      console.log(pokemonData);
+
       setSearchedPokemon(pokemonData);
       setSearchInput("");
     } catch (error) {
@@ -56,12 +59,13 @@ const SearchPokemon = () => {
     }
   };
 
-  // create function to handle saving a book to our database
-  const handleSavePokemon = async (pokemonId) => {
-    // find the book in `searchedBooks` state by the matching id
-    const pokemonToSave = searchedPokemon.find(
-      (pokemon) => pokemon.pokemonId === pokemonId
-    );
+  // create function to handle saving a pokemon to our database
+  const handleSavePokemon = async (pokemonToSave) => {
+    // find the pokemon in `searchedPokemon` state by the matching id
+
+    // const pokemonToSave = searchedPokemon.find(
+    //   (pokemonCard) => pokemonCard.pokeId === pokeId
+    // );
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -71,13 +75,19 @@ const SearchPokemon = () => {
     }
 
     try {
-      const response = await savePokemon({
+      const { data } = await savePokemon({
         variables: {
           pokemonData: pokemonToSave,
+          // pokeId: "si1-1",
+          // name: "Mew",
+          // pokedex: 151,
+          // price: 43.31,
+          // image: "https://images.pokemontcg.io/si1/1.png",
         },
       });
+      console.log("pokemonToSave", pokemonToSave);
 
-      if (!response) {
+      if (!data) {
         throw new Error("something went wrong!");
       }
 
@@ -124,19 +134,20 @@ const SearchPokemon = () => {
         <Row>
           {searchedPokemon.map((pokemon) => {
             return (
-              <Col md="4" key={pokemon.pokemonId}>
+              <Col md="4" key={pokemon.pokeId}>
                 <Card border="dark">
                   {pokemon.image ? (
                     <Card.Img
                       src={pokemon.image}
-                      alt={`The cover for ${pokemon.title}`}
+                      alt={`The cover for ${pokemon.name}`}
                       variant="top"
                     />
                   ) : null}
                   <Card.Body>
-                    <Card.Title>{pokemon.title}</Card.Title>
+                    <Card.Title>{pokemon.name}</Card.Title>
                     <p className="small">Pokemon: {pokemon.name}</p>
                     <Card.Text>{pokemon.description}</Card.Text>
+
                     {Auth.loggedIn() && (
                       <Button
                         disabled={savedPokemonIds?.some(
@@ -144,7 +155,7 @@ const SearchPokemon = () => {
                             savedPokemonId === pokemon.pokemonId
                         )}
                         className="btn-block btn-info"
-                        onClick={() => handleSavePokemon(pokemon.pokemonId)}
+                        onClick={() => handleSavePokemon(pokemon)}
                       >
                         {savedPokemonIds?.some(
                           (savedPokemonId) =>

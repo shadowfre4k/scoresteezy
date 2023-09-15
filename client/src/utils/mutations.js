@@ -36,14 +36,13 @@ export const SAVE_POKEMON = gql`
         pokedex
         image
         price
-        comment
       }
     }
   }
 `;
 
 export const REMOVE_POKEMON = gql`
-  mutation removePokemon($pokeId: ID!) {
+  mutation removePokemon($pokeId: String!) {
     removePokemon(pokeId: $pokeId) {
       _id
       username
@@ -54,7 +53,6 @@ export const REMOVE_POKEMON = gql`
         pokedex
         image
         price
-        comment
       }
     }
   }
