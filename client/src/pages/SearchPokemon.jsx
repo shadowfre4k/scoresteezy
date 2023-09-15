@@ -1,10 +1,17 @@
 import { useState, useEffect } from "react";
-import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
-
+import { Container, Col, Form, Button, Row } from "react-bootstrap";
 import Auth from "../utils/auth";
 import { savePokemonIds, getSavedPokemonIds } from "../utils/localStorage";
 import { useMutation } from "@apollo/client";
 import { SAVE_POKEMON } from "../utils/mutations";
+import {
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardImage,
+  MDBCardText,
+} from 'mdb-react-ui-kit';
+
 
 const SearchPokemon = () => {
   // create state for holding returned google api data
@@ -48,8 +55,8 @@ const SearchPokemon = () => {
           : pokemonCard.nationalPokedexNumbers,
         image: pokemonCard.images.small,
         price: pokemonCard.cardmarket
-          ? pokemonCard.cardmarket.prices.averageSellPrice
-          : 0,
+          ? pokemonCard.cardmarket.prices.averageSellPrice : 0,
+        description: pokemonCard.description,
       }));
 
       setSearchedPokemon(pokemonData);
@@ -102,7 +109,7 @@ const SearchPokemon = () => {
     <>
       <div className="text-light bg-dark p-5">
         <Container>
-          <h1>Search for pokemon!</h1>
+          <h1 >Adopt a Pokemon!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col xs={12} md={8}>
@@ -112,61 +119,68 @@ const SearchPokemon = () => {
                   onChange={(e) => setSearchInput(e.target.value)}
                   type="text"
                   size="lg"
-                  placeholder="Search for a pokemon"
+                  placeholder="Search..."
                 />
               </Col>
               <Col xs={12} md={4}>
-                <Button type="submit" variant="success" size="lg">
-                  Submit Search
+                <Button className="button" type="submit" variant="success" size="lg">
+                  Submit
                 </Button>
               </Col>
             </Row>
           </Form>
         </Container>
       </div>
-
       <Container>
         <h2 className="pt-5">
           {searchedPokemon.length
-            ? `Viewing ${searchedPokemon.length} results:`
-            : "Search for a pokemon to begin"}
+            ? `Showing ${searchedPokemon.length} pokemon ready for a FURever home:`
+            : "Search for a pokemon to Adopt Today!"}
         </h2>
+
+{/* Pokemon Cards */}
+
         <Row>
           {searchedPokemon.map((pokemon) => {
             return (
-              <Col md="4" key={pokemon.pokeId}>
-                <Card border="dark">
+              <Col md="4" key={pokemon.pokemonId}>
+                <MDBCard>
                   {pokemon.image ? (
-                    <Card.Img
+                    <MDBCardImage
                       src={pokemon.image}
-                      alt={`The cover for ${pokemon.name}`}
+                      fluid alt={`The cover for ${pokemon.title}`}
                       variant="top"
                     />
                   ) : null}
-                  <Card.Body>
-                    <Card.Title>{pokemon.name}</Card.Title>
-                    <p className="small">Pokemon: {pokemon.name}</p>
-                    <Card.Text>{pokemon.description}</Card.Text>
-
+                <MDBCardBody>
+                <MDBCardTitle>
+                  <p>{pokemon.name}</p>
+                </MDBCardTitle>
+                <MDBCardText>
+                  Pokedex #{pokemon.pokedex}
+                </MDBCardText>
+                <MDBCardText>
+                  ${pokemon.price}
+                </MDBCardText>
                     {Auth.loggedIn() && (
                       <Button
                         disabled={savedPokemonIds?.some(
                           (savedPokemonId) =>
                             savedPokemonId === pokemon.pokemonId
                         )}
-                        className="btn-block btn-info"
-                        onClick={() => handleSavePokemon(pokemon)}
+                        className="btn-block btn-info button"
+                        onClick={() => handleSavePokemon(pokemon.pokemonId)}
                       >
                         {savedPokemonIds?.some(
                           (savedPokemonId) =>
                             savedPokemonId === pokemon.pokemonId
                         )
                           ? "This pokemon has already been saved!"
-                          : "Save this pokemon!"}
+                          : "Adopt this Pokemon!"}
                       </Button>
                     )}
-                  </Card.Body>
-                </Card>
+                  </MDBCardBody>
+                </MDBCard>
               </Col>
             );
           })}

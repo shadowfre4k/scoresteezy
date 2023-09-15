@@ -13,5 +13,23 @@ h6 {
 
 .small {
   font-weight: 300;
-  font-style: italic;
+  font-style: bold;
 }
+
+.button {
+  background-color: rgb(247, 174, 174);
+  border: black;
+}
+
+.button:hover {
+  background-color: rgb(105, 66, 66);
+}
+
+.resize {
+  flex-direction: row;
+  width: 85%;
+  height: 500px;
+  justify-items: center;
+}
+
+
