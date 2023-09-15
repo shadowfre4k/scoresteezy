@@ -9,6 +9,8 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import CarouselPage from "./components/CarouselPage";
+
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -35,10 +37,13 @@ const client = new ApolloClient({
 
 function App() {
   return (
+    
     <ApolloProvider client={client}>
       <Navbar />
       <Outlet />
+      <CarouselPage/>
     </ApolloProvider>
+
   );
 }
 

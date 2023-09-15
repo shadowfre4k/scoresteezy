@@ -15,7 +15,8 @@ const AppNavbar = () => {
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container fluid>
           <Navbar.Brand as={Link} to="/">
-            Pokemon
+            <h1>S.P.A.A</h1>
+            Scorsteezy Pokemon Adoption Agency
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar" />
           <Navbar.Collapse id="navbar" className="d-flex flex-row-reverse">
