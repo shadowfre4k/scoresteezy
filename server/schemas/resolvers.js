@@ -55,13 +55,14 @@ const resolvers = {
 
       throw new AuthenticationError("You need to be logged in!");
     },
-    removePokemon: async (parent, { pokemonId }, context) => {
+    removePokemon: async (parent, { pokeId }, context) => {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { savedPokemon: { pokemonId } } },
+          { $pull: { savedPokemon: { pokeId } } },
           { new: true }
         );
+        console.log("updatedUser");
 
         return updatedUser;
       }
