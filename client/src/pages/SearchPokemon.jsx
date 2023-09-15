@@ -121,7 +121,6 @@ const SearchPokemon = () => {
           </Form>
         </Container>
       </div>
-
       <Container>
         <h2 className="pt-5">
           {searchedPokemon.length
@@ -135,7 +134,6 @@ const SearchPokemon = () => {
           {searchedPokemon.map((pokemon) => {
             return (
               <Col md="4" key={pokemon.pokemonId}>
-
                 <MDBCard>
                   {pokemon.image ? (
                     <MDBCardImage
