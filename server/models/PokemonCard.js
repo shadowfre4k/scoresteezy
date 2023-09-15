@@ -7,6 +7,10 @@ const pokeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  pokeId: {
+    type: String,
+    required: true,
+  },
 
   pokedex: {
     type: Number,
@@ -20,9 +24,6 @@ const pokeSchema = new mongoose.Schema({
   image: {
     type: String,
     required: true,
-  },
-  comment: {
-    type: String,
   },
 });
 

@@ -9,12 +9,11 @@ const typeDefs = gql`
   }
 
   type PokemonCard {
-    pokeId: ID!
-    name: [String]
+    pokeId: String
+    name: String
     pokedex: Int
     price: Float
     image: String
-    comment: String
   }
 
   type Auth {
@@ -23,22 +22,22 @@ const typeDefs = gql`
   }
 
   input PokemonInput {
-    name: [String]
+    pokeId: String
+    name: String
     pokedex: Int
     price: Float
     image: String
-    comment: String
   }
 
   type Query {
-    me: User
+    me: User!
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
     savePokemon(pokemonData: PokemonInput!): User
-    removePokemon(pokeId: ID!): User
+    removePokemon(pokeId: String!): User
   }
 `;
 

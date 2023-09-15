@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import App from "./App.jsx";
 import SearchPokemon from "./pages/SearchPokemon.jsx";
-// import SavedBooks from "./pages/SavedBooks.jsx";
+import SavedPokemon from "./pages/SavedPokemon.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,10 +16,10 @@ const router = createBrowserRouter([
         index: Boolean,
         element: <SearchPokemon />,
       },
-      // {
-      //   path: "/saved",
-      //   element: <SavedBooks />,
-      // },
+      {
+        path: "/saved",
+        element: <SavedPokemon />,
+      },
     ],
   },
 ]);

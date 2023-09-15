@@ -46,16 +46,19 @@ const SearchPokemon = () => {
       if (!response.ok) {
         throw new Error("something went wrong!");
       }
-
+      // console.log(result);
       const pokemonData = result.data.map((pokemonCard) => ({
+        pokeId: pokemonCard.id,
         name: pokemonCard.name || ["No name to display"],
-        pokedex: pokemonCard.nationalPokedexNumbers,
+        pokedex: pokemonCard.nationalPokedexNumbers
+          ? pokemonCard.nationalPokedexNumbers[0]
+          : pokemonCard.nationalPokedexNumbers,
         image: pokemonCard.images.small,
         price: pokemonCard.cardmarket
           ? pokemonCard.cardmarket.prices.averageSellPrice : 0,
         description: pokemonCard.description,
       }));
-      console.log(pokemonData);
+
       setSearchedPokemon(pokemonData);
       setSearchInput("");
     } catch (error) {
@@ -63,12 +66,13 @@ const SearchPokemon = () => {
     }
   };
 
-  // create function to handle saving a book to our database
-  const handleSavePokemon = async (pokemonId) => {
-    // find the book in `searchedBooks` state by the matching id
-    const pokemonToSave = searchedPokemon.find(
-      (pokemon) => pokemon.pokemonId === pokemonId
-    );
+  // create function to handle saving a pokemon to our database
+  const handleSavePokemon = async (pokemonToSave) => {
+    // find the pokemon in `searchedPokemon` state by the matching id
+
+    // const pokemonToSave = searchedPokemon.find(
+    //   (pokemonCard) => pokemonCard.pokeId === pokeId
+    // );
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -78,13 +82,19 @@ const SearchPokemon = () => {
     }
 
     try {
-      const response = await savePokemon({
+      const { data } = await savePokemon({
         variables: {
           pokemonData: pokemonToSave,
+          // pokeId: "si1-1",
+          // name: "Mew",
+          // pokedex: 151,
+          // price: 43.31,
+          // image: "https://images.pokemontcg.io/si1/1.png",
         },
       });
+      console.log("pokemonToSave", pokemonToSave);
 
-      if (!response) {
+      if (!data) {
         throw new Error("something went wrong!");
       }
 

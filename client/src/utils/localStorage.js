@@ -14,7 +14,7 @@ export const savePokemonIds = (pokeIdArr) => {
   }
 };
 
-export const removePokeId = (pokeIdArr) => {
+export const removePokemonId = (pokeIdArr) => {
   const savedPokemonIds = localStorage.getItem("saved_pokemon")
     ? JSON.parse(localStorage.getItem("saved_pokemon"))
     : null;
