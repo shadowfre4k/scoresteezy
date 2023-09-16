@@ -25,6 +25,11 @@ h6 {
   background-color: rgb(105, 66, 66);
 }
 
+.button:active {
+  background-color: rgb(105, 66, 66) !important;
+}
+
+
 .resize {
   flex-direction: row;
   width: 85%;
