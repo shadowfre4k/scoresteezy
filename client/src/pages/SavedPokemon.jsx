@@ -12,7 +12,7 @@ const SavedPokemon = () => {
   const userData = data?.me || {};
 
   // create function that accepts the book"s mongo _id value as param and deletes the book from the database
-  const handleDeletePokemon = async (pokeId) => {
+  const handleDeletePokemon = async (pokemon) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
@@ -21,11 +21,11 @@ const SavedPokemon = () => {
 
     try {
       const response = await removePokemon({
-        variables: { pokeId },
+        variables: { pokeId: pokemon.pokeId },
       });
       console.log(response);
       // upon success, remove book"s id from localStorage
-      removePokemonId(pokeId);
+      removePokemonId(pokemon.pokeId);
     } catch (err) {
       console.error(err);
     }
@@ -69,7 +69,7 @@ const SavedPokemon = () => {
                     <Card.Text>{pokemon.description}</Card.Text>
                     <Button
                       className="btn-block btn-danger"
-                      onClick={() => handleDeletePokemon(pokemon.pokemonId)}
+                      onClick={() => handleDeletePokemon(pokemon)}
                     >
                       Delete this Book!
                     </Button>
