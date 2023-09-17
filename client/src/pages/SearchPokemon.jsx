@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Col, Form, Button, Row } from "react-bootstrap";
 import Auth from "../utils/auth";
 import { savePokemonIds, getSavedPokemonIds } from "../utils/localStorage";
@@ -16,6 +16,7 @@ const SearchPokemon = () => {
   const [searchedPokemon, setSearchedPokemon] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [savedPokemonIds, setSavedPokemonIds] = useState(getSavedPokemonIds());
+  const [userRatings, setUserRatings] = useState({}); // State to store user ratings
 
   const [savePokemon] = useMutation(SAVE_POKEMON);
 
@@ -51,6 +52,7 @@ const SearchPokemon = () => {
           ? pokemonCard.cardmarket.prices.averageSellPrice
           : 0,
         description: pokemonCard.description,
+        rating: userRatings[pokemonCard.id] || 0, // Get the user's rating or default to 0
       }));
 
       setSearchedPokemon(pokemonData);
@@ -70,7 +72,11 @@ const SearchPokemon = () => {
     try {
       const { data } = await savePokemon({
         variables: {
-          pokemonData: pokemonToSave,
+          pokemonData: {
+            ...pokemonToSave,
+            // Include the user's rating when saving a Pokemon
+            rating: userRatings[pokemonToSave.pokeId] || 0,
+          },
         },
       });
 
@@ -82,6 +88,14 @@ const SearchPokemon = () => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  // Function to handle user rating input
+  const handleRatingChange = (pokeId, rating) => {
+    setUserRatings({
+      ...userRatings,
+      [pokeId]: rating,
+    });
   };
 
   return (
@@ -149,6 +163,21 @@ const SearchPokemon = () => {
                     </MDBCardTitle>
                     <MDBCardText>Pokedex #{pokemon.pokedex}</MDBCardText>
                     <MDBCardText>${pokemon.price}</MDBCardText>
+                    <MDBCardText>
+                      Rating:{" "}
+                      <select
+                        value={userRatings[pokemon.pokeId] || 0}
+                        onChange={(e) =>
+                          handleRatingChange(pokemon.pokeId, parseInt(e.target.value))
+                        }
+                      >
+                        {Array.from({ length: 6 }, (_, i) => (
+                          <option key={i} value={i}>
+                            {i}
+                          </option>
+                        ))}
+                      </select>
+                    </MDBCardText>
                     {Auth.loggedIn() && (
                       <Button
                         disabled={savedPokemonIds?.some(
