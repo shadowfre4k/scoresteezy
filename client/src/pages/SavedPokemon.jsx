@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import { useQuery, useMutation } from "@apollo/client";
+import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import { QUERY_ME } from "../utils/queries";
 import { REMOVE_POKEMON } from "../utils/mutations";
 import Auth from "../utils/auth";
@@ -13,18 +12,7 @@ const SavedPokemon = () => {
 
   const userData = data?.me || {};
 
-  // Create a state variable to store user ratings for saved Pokemon
-  const [userRatings, setUserRatings] = useState({});
-
-  // Function to handle user rating input
-  const handleRatingChange = (pokeId, rating) => {
-    setUserRatings({
-      ...userRatings,
-      [pokeId]: rating,
-    });
-  };
-
-  // create function that accepts the Pokemon's mongo _id value as param and deletes the Pokemon from the database
+  // create function that accepts the book"s mongo _id value as param and deletes the book from the database
   const handleDeletePokemon = async (pokemon) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -37,7 +25,7 @@ const SavedPokemon = () => {
         variables: { pokeId: pokemon.pokeId },
       });
       console.log(response);
-      // upon success, remove Pokemon's id from localStorage
+      // upon success, remove book"s id from localStorage
       removePokemonId(pokemon.pokeId);
     } catch (err) {
       console.error(err);
@@ -48,25 +36,21 @@ const SavedPokemon = () => {
   if (loading) {
     return <h2>LOADING...</h2>;
   }
-//Return either you have no saved Pokemon or the amount of Pokemon that you have saved
+//Display number of asaved pokemon if no pokemon saved return You havent selected any Pokemon"
   return (
     <>
       <div className="p-5">
         <Container>
           <img src={Ash} alt="logo" className="d-flex justify-content-center align-items-center hero-dimension" />
         </Container>
-      </div>
+      </div>   
       <Container>
         <h2 className="pt-5 d-flex justify-content-center align-items-center">
           {userData?.savedPokemon?.length
             ? `Viewing ${userData.savedPokemon.length} saved ${
                 userData.savedPokemon.length === 1 ? "Pokemon" : "Pokemons"
-              }:`
-<<<<<<< HEAD
-            : "You have no saved Pokemon!"} 
-=======
-            : "You haven't selected any Pokemon :("}
->>>>>>> 16cddd7c618a4323dafc44a531dbd1696d802b82
+              }`
+            : "You haven't selected any Pokémon :("}
         </h2>
         <Row>
           {userData?.savedPokemon?.map((pokemon) => {
@@ -82,27 +66,13 @@ const SavedPokemon = () => {
                   ) : null}
                   <Card.Body>
                     <Card.Title>{pokemon.name}</Card.Title>
+                    <p className="small">Authors: {pokemon.name}</p>
                     <Card.Text>{pokemon.description}</Card.Text>
-                    
-                    {/* Include the Rating Input */}
-                    <select
-                      value={userRatings[pokemon.pokeId] || 0}
-                      onChange={(e) =>
-                        handleRatingChange(pokemon.pokeId, parseInt(e.target.value))
-                      }
-                    >
-                      {Array.from({ length: 6 }, (_, i) => (
-                        <option key={i} value={i}>
-                          {i}
-                        </option>
-                      ))}
-                    </select>
-                    
                     <Button
                       className="btn-block btn-danger"
                       onClick={() => handleDeletePokemon(pokemon)}
                     >
-                      Delete this Pokemon!
+                      Delete this Pokémon!
                     </Button>
                   </Card.Body>
                 </Card>
@@ -116,6 +86,7 @@ const SavedPokemon = () => {
 };
 
 export default SavedPokemon;
+
 
 // import React, { useState } from "react";
 // import { Container, Card, Button, Row, Col } from "react-bootstrap";
