@@ -32,9 +32,42 @@ h6 {
 
 .resize {
   flex-direction: row;
-  width: 85%;
+  width: 100%;
   height: 500px;
   justify-items: center;
 }
 
+.header-hero-text {
+  color: black;
+}
 
+.mask {
+  flex: auto;
+  justify-content: center;
+  mask-size: 50%;
+}
+
+.adoption {
+  justify-content: center;
+  flex: auto;
+}
+
+.hero {
+  display: flex;
+    flex-direction: column;
+    height: 100vh;
+    align-self: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-dimension {
+  height: 200px;
+}
+
+.card-color {
+  background-color: rgba(220, 220, 220, .8);
+}

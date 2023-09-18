@@ -5,6 +5,7 @@ import { QUERY_ME } from "../utils/queries";
 import { REMOVE_POKEMON } from "../utils/mutations";
 import Auth from "../utils/auth";
 import { removePokemonId } from "../utils/localStorage";
+import Ash from '../assets/pokemon-23.svg';
 
 const SavedPokemon = () => {
   const { loading, data } = useQuery(QUERY_ME);
@@ -50,18 +51,22 @@ const SavedPokemon = () => {
 //Return either you have no saved Pokemon or the amount of Pokemon that you have saved
   return (
     <>
-      <div className="text-light bg-dark p-5">
+      <div className="p-5">
         <Container>
-          <h1>Viewing saved Pokemon!</h1>
+          <img src={Ash} alt="logo" className="d-flex justify-content-center align-items-center hero-dimension" />
         </Container>
       </div>
       <Container>
-        <h2 className="pt-5">
+        <h2 className="pt-5 d-flex justify-content-center align-items-center">
           {userData?.savedPokemon?.length
             ? `Viewing ${userData.savedPokemon.length} saved ${
                 userData.savedPokemon.length === 1 ? "Pokemon" : "Pokemons"
               }:`
+<<<<<<< HEAD
             : "You have no saved Pokemon!"} 
+=======
+            : "You haven't selected any Pokemon :("}
+>>>>>>> 16cddd7c618a4323dafc44a531dbd1696d802b82
         </h2>
         <Row>
           {userData?.savedPokemon?.map((pokemon) => {

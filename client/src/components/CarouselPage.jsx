@@ -1,10 +1,10 @@
 import Carousel from "react-bootstrap/Carousel";
-import Arbok from '../assets/Arbok.png';
-import Charizard from '../assets/Charizard.png';
-import Darkrai from '../assets/Darkrai.png';
-import Rayquaza from '../assets/Rayquaza.png';
-import Typhlosion from '../assets/Typhlosion.png';
-import Umbreon from '../assets/Umbreon.png';
+import Arbok from '../assets/pokemon-2.svg';
+import Charizard from '../assets/pokemon-3.svg';
+import Darkrai from '../assets/pokemon-7.svg';
+import Rayquaza from '../assets/pokemon-10.svg';
+import Typhlosion from '../assets/pokemon-16.svg';
+import Umbreon from '../assets/pokemon-19.svg';
 
 
 function CarouselPage() {
@@ -13,63 +13,51 @@ function CarouselPage() {
         <Carousel data-bs-theme="dark">
         <Carousel.Item>
             <img
-                className="d-block resize"
+                className=" resize d-flex justify-content-center align-items-center"
                 src= {Arbok}
                 alt= 'First image'
             />
-        <Carousel.Caption>
-            <h3>Arboks!</h3>
-        </Carousel.Caption>
+
         </Carousel.Item>
         <Carousel.Item>
             <img
-                className="d-block resize"
+                className="d-flex justify-content-center align-items-center resize"
                 src= {Charizard}
                 alt= 'Second image'
             />
-        <Carousel.Caption>
-            <h3>Charizards!</h3>
-        </Carousel.Caption>
+
         </Carousel.Item>
         <Carousel.Item>
             <img
-                className="d-block resize"
+                className="d-flex justify-content-center align-items-center resize"
                 src= {Darkrai}
                 alt= 'Third Image'
             />
-        <Carousel.Caption>
-            <h3>Darkrai!</h3>
-        </Carousel.Caption>
+
         </Carousel.Item>
         <Carousel.Item>
             <img
-                className="d-block resize"
+                className="resize d-flex justify-content-center align-items-center"
                 src= {Rayquaza}
                 alt= 'Fourth Image'
             />
-        <Carousel.Caption>
-            <h3>Rayquaza!</h3>
-        </Carousel.Caption>
+
         </Carousel.Item>
         <Carousel.Item>
             <img
-                className="d-block resize"
+                className="d-flex justify-content-center align-items-center resize"
                 src= {Typhlosion}
                 alt= 'Fifth image'
             />
-        <Carousel.Caption>
-            <h3>Typhlosions!</h3>
-        </Carousel.Caption>
+
         </Carousel.Item>
         <Carousel.Item>
             <img
-                className="d-block resize"
+                className="d-flex justify-content-center align-items-center resize"
                 src= {Umbreon}
                 alt= 'Sixth image'
             />
-        <Carousel.Caption>
-            <h3>Umbreons!</h3>
-        </Carousel.Caption>
+
         </Carousel.Item>
         </Carousel>
       </div>
