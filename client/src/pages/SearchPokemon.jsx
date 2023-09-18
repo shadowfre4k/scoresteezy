@@ -4,6 +4,7 @@ import Auth from "../utils/auth";
 import { savePokemonIds, getSavedPokemonIds } from "../utils/localStorage";
 import { useMutation } from "@apollo/client";
 import { SAVE_POKEMON } from "../utils/mutations";
+import Ash from '../assets/pokemon-23.svg';
 import {
   MDBCard,
   MDBCardBody,
@@ -98,12 +99,24 @@ const SearchPokemon = () => {
     });
   };
 
+
   return (
     <>
-      <div className="text-light bg-dark p-5">
+
+  {/* Header */}
+
+<header style={{ paddingLeft: 0 }}>
+      <div
+        className='p-5 text-center bg-image hero'
+        style={{ backgroundImage: "url(https://images8.alphacoders.com/106/1060638.png)", height: 800 }}>
+          <img src={Ash} alt="logo" className="d-flex justify-content-center align-items-center hero-dimension" />
+      </div>
+</header>
+                 
+       <div className='d-flex justify-content-center align-items-center h-100'>
         <Container>
-          <h1>Adopt a Pokemon!</h1>
-          <Form onSubmit={handleFormSubmit}>
+          <h1 className="d-flex justify-content-center align-items-center h-100">Adopt a Pokemon!</h1>
+          <Form className="d-flex justify-content-center align-items-center" onSubmit={handleFormSubmit}>
             <Row>
               <Col xs={12} md={8}>
                 <Form.Control
@@ -113,6 +126,7 @@ const SearchPokemon = () => {
                   type="text"
                   size="lg"
                   placeholder="Search..."
+                  className="d-flex justify-content-center align-items-center h-100"
                 />
               </Col>
               <Col xs={12} md={4}>
@@ -129,18 +143,24 @@ const SearchPokemon = () => {
           </Form>
         </Container>
       </div>
+
+
+
+    {/* Body */}
+
+
       <Container>
-        <h2 className="pt-5">
+        <h2 className="pt-5 d-flex justify-content-center align-items-center h-100">
           {searchedPokemon.length
             ? `Showing ${searchedPokemon.length} Pokemon ready for adoption:`
-            : "Search for a Pokemon to adopt today!"}
+            : "Adopt Today!"}
         </h2>
 
         <Row>
           {searchedPokemon.map((pokemon) => {
             return (
               <Col md="4" key={pokemon.pokeId}>
-                <MDBCard>
+                <MDBCard className="card-color">
                   {pokemon.image ? (
                     <MDBCardImage
                       src={pokemon.image}
@@ -149,7 +169,7 @@ const SearchPokemon = () => {
                       variant="top"
                     />
                   ) : null}
-                  <MDBCardBody>
+                  <MDBCardBody >
                     <MDBCardTitle>
                       <a
                         href={`https://www.google.com/search?q=${encodeURIComponent(
