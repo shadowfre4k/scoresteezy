@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import { QUERY_ME } from "../utils/queries";
@@ -12,7 +13,18 @@ const SavedPokemon = () => {
 
   const userData = data?.me || {};
 
-  // create function that accepts the book"s mongo _id value as param and deletes the book from the database
+  // Create a state variable to store user ratings for saved Pokemon
+  const [userRatings, setUserRatings] = useState({});
+
+  // Function to handle user rating input
+  const handleRatingChange = (pokeId, rating) => {
+    setUserRatings({
+      ...userRatings,
+      [pokeId]: rating,
+    });
+  };
+
+  // create function that accepts the Pokémon's mongo _id value as param and deletes the Pokémon from the database
   const handleDeletePokemon = async (pokemon) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -25,7 +37,7 @@ const SavedPokemon = () => {
         variables: { pokeId: pokemon.pokeId },
       });
       console.log(response);
-      // upon success, remove book"s id from localStorage
+      // upon success, remove Pokémon's id from localStorage
       removePokemonId(pokemon.pokeId);
     } catch (err) {
       console.error(err);
@@ -36,7 +48,8 @@ const SavedPokemon = () => {
   if (loading) {
     return <h2>LOADING...</h2>;
   }
-//Display number of asaved pokemon if no pokemon saved return You havent selected any Pokemon"
+
+  // Display number of saved Pokémon, if no Pokémon saved return "You haven't selected any Pokémon"
   return (
     <>
       <div className="p-5">
@@ -48,7 +61,7 @@ const SavedPokemon = () => {
         <h2 className="pt-5 d-flex justify-content-center align-items-center">
           {userData?.savedPokemon?.length
             ? `Viewing ${userData.savedPokemon.length} saved ${
-                userData.savedPokemon.length === 1 ? "Pokemon" : "Pokemons"
+                userData.savedPokemon.length === 1 ? "Pokémon" : "Pokémons"
               }`
             : "You haven't selected any Pokémon :("}
         </h2>
@@ -68,6 +81,21 @@ const SavedPokemon = () => {
                     <Card.Title>{pokemon.name}</Card.Title>
                     <p className="small">Authors: {pokemon.name}</p>
                     <Card.Text>{pokemon.description}</Card.Text>
+                    <Card.Text>
+                      Rating:{" "}
+                      <select
+                        value={userRatings[pokemon.pokeId] || 0}
+                        onChange={(e) =>
+                          handleRatingChange(pokemon.pokeId, parseInt(e.target.value))
+                        }
+                      >
+                        {Array.from({ length: 6 }, (_, i) => (
+                          <option key={i} value={i}>
+                            {i}
+                          </option>
+                        ))}
+                      </select>
+                    </Card.Text>
                     <Button
                       className="btn-block btn-danger"
                       onClick={() => handleDeletePokemon(pokemon)}
