@@ -1,5 +1,6 @@
-import { useQuery, useMutation } from "@apollo/client";
+import React, { useState } from "react";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
+import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 import { REMOVE_POKEMON } from "../utils/mutations";
 import Auth from "../utils/auth";
@@ -11,7 +12,18 @@ const SavedPokemon = () => {
 
   const userData = data?.me || {};
 
-  // create function that accepts the book"s mongo _id value as param and deletes the book from the database
+  // Create a state variable to store user ratings for saved Pokemon
+  const [userRatings, setUserRatings] = useState({});
+
+  // Function to handle user rating input
+  const handleRatingChange = (pokeId, rating) => {
+    setUserRatings({
+      ...userRatings,
+      [pokeId]: rating,
+    });
+  };
+
+  // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeletePokemon = async (pokemon) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -24,7 +36,7 @@ const SavedPokemon = () => {
         variables: { pokeId: pokemon.pokeId },
       });
       console.log(response);
-      // upon success, remove book"s id from localStorage
+      // upon success, remove book's id from localStorage
       removePokemonId(pokemon.pokeId);
     } catch (err) {
       console.error(err);
@@ -67,6 +79,21 @@ const SavedPokemon = () => {
                     <Card.Title>{pokemon.name}</Card.Title>
                     <p className="small">Authors: {pokemon.name}</p>
                     <Card.Text>{pokemon.description}</Card.Text>
+                    
+                    {/* Include the Rating Input */}
+                    <select
+                      value={userRatings[pokemon.pokeId] || 0}
+                      onChange={(e) =>
+                        handleRatingChange(pokemon.pokeId, parseInt(e.target.value))
+                      }
+                    >
+                      {Array.from({ length: 6 }, (_, i) => (
+                        <option key={i} value={i}>
+                          {i}
+                        </option>
+                      ))}
+                    </select>
+                    
                     <Button
                       className="btn-block btn-danger"
                       onClick={() => handleDeletePokemon(pokemon)}
