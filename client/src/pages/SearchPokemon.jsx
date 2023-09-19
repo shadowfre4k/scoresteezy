@@ -160,7 +160,7 @@ const SearchPokemon = () => {
           {searchedPokemon.map((pokemon) => {
             return (
               <Col md="4" key={pokemon.pokeId}>
-                <MDBCard className="card-color">
+                <MDBCard border="dark" className="card-color">
                   {pokemon.image ? (
                     <MDBCardImage
                       src={pokemon.image}
