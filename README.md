@@ -1,4 +1,4 @@
-# S.P.A.A
+# S.P.A
 
 ![License Badge](https://img.shields.io/badge/license-MIT-green)
 
