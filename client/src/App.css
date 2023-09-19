@@ -19,6 +19,7 @@ h6 {
 .button {
   background-color: rgb(247, 174, 174);
   border: black;
+  box-shadow: 0px 10px 20px rgba(0,0,0,.332)
 }
 
 .button:hover {
@@ -69,5 +70,20 @@ h6 {
 }
 
 .card-color {
-  background-color: rgba(220, 220, 220, .8);
+  /* background-color: rgba(220, 220, 220, .8); */
+  background: linear-gradient(60deg, #39ef73d8, #6326ff 100%);
+  box-shadow: 0px 10px 20px rgba(0,0,0,.332); 
 }
+
+.card-gap {
+  row-gap: 20px;
+}
+
+.rating-button {
+  border-radius: 25% ;
+}
+
+.text-shadow {
+  text-shadow: 1px 1px 2px black;
+}
+

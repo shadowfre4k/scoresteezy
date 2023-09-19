@@ -115,7 +115,7 @@ const SearchPokemon = () => {
                  
        <div className='d-flex justify-content-center align-items-center h-100'>
         <Container>
-          <h1 className="d-flex justify-content-center align-items-center h-100">Adopt a Pokemon!</h1>
+          <h1 className="d-flex justify-content-center align-items-center h-100 ">Adopt a Pokemon!</h1>
           <Form className="d-flex justify-content-center align-items-center" onSubmit={handleFormSubmit}>
             <Row>
               <Col xs={12} md={8}>
@@ -156,7 +156,7 @@ const SearchPokemon = () => {
             : "Adopt Today!"}
         </h2>
 
-        <Row>
+        <Row className="card-gap">
           {searchedPokemon.map((pokemon) => {
             return (
               <Col md="4" key={pokemon.pokeId}>
@@ -181,11 +181,12 @@ const SearchPokemon = () => {
                         {pokemon.name}
                       </a>
                     </MDBCardTitle>
-                    <MDBCardText>Pokedex #{pokemon.pokedex}</MDBCardText>
-                    <MDBCardText>${pokemon.price}</MDBCardText>
-                    <MDBCardText>
+                    <MDBCardText className="text-shadow">Pokedex #{pokemon.pokedex}</MDBCardText>
+                    <MDBCardText className="text-shadow">${pokemon.price}</MDBCardText>
+                    <MDBCardText className="text-shadow">
                       Rating:{" "}
                       <select
+                        className="rating-button"
                         value={userRatings[pokemon.pokeId] || 0}
                         onChange={(e) =>
                           handleRatingChange(pokemon.pokeId, parseInt(e.target.value))
