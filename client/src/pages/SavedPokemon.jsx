@@ -108,7 +108,9 @@ const SavedPokemon = () => {
                     />
                   ) : null}
                   <Card.Body>
+
                     <Card.Title>
+
                       <a
                         href={`https://www.google.com/search?q=${encodeURIComponent(
                           pokemon.name
@@ -118,6 +120,7 @@ const SavedPokemon = () => {
                       >
                         {pokemon.name}
                       </a>
+
                     </Card.Title>
                     <Card.Text className="text-shadow">
                       Pokedex #{pokemon.pokedex}
@@ -125,6 +128,9 @@ const SavedPokemon = () => {
                     <Card.Text className="text-shadow">
                       {pokemon.description}
                     </Card.Text>
+                        </Card.Title>
+                    <Card.Text className="text-shadow">Pokedex #{pokemon.pokedex}</Card.Text>
+                    <Card.Text className="text-shadow">{pokemon.description}</Card.Text>
                     <Card.Text className="text-shadow">
                       Rating:{" "}
                       <select
@@ -146,8 +152,11 @@ const SavedPokemon = () => {
                     </Card.Text>
                     <Button
                       className="btn-block btn-info button"
+
                       onClick={() => handleDeletePokemon(pokemon)}
                     >
+                      onClick={() => handleDeletePokemon(pokemon)}>
+
                       Delete this Pokémon!
                     </Button>
                   </Card.Body>
