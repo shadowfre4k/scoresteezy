@@ -15,15 +15,14 @@ const AppNavbar = () => {
       <Navbar bg="light" variant="light" expand="lg">
         <Container fluid>
           <Navbar.Brand as={Link} to="/">
-          <img src={SPA} alt="logo" />
+          <img src={SPA} alt="pokeLogo" />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar" />
           <Navbar.Collapse id="navbar" className="d-flex flex-row-reverse">
             <Nav className="ml-auto d-flex">
               <Nav.Link as={Link} to="/">
-                Home
+                Home 
               </Nav.Link>
-
               {/* if user is logged in show saved books and logout */}
               {Auth.loggedIn() ? (
                 <>
