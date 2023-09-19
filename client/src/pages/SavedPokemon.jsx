@@ -127,8 +127,9 @@ const SavedPokemon = () => {
                       Delete this Pokémon!
                     </Button>
                   </Card.Body>
+                  <p>Price:{pokemon.price}</p>
                 </Card>
-                <p>Price:{pokemon.price}</p>
+
               </Col>
               
             );
