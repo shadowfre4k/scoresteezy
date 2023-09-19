@@ -14,7 +14,6 @@ const SavedPokemon = () => {
   const userData = data?.me || {};
 
 
-
   // Create a state variable to store user ratings for saved Pokemon
   const [userRatings, setUserRatings] = useState({});
 
