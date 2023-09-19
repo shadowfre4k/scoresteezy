@@ -5,13 +5,15 @@ import { QUERY_ME } from "../utils/queries";
 import { REMOVE_POKEMON } from "../utils/mutations";
 import Auth from "../utils/auth";
 import { removePokemonId } from "../utils/localStorage";
-import Ash from '../assets/pokemon-23.svg';
+import Ash from "../assets/pokemon-23.svg";
 
 const SavedPokemon = () => {
   const { loading, data } = useQuery(QUERY_ME);
   const [removePokemon] = useMutation(REMOVE_POKEMON);
 
   const userData = data?.me || {};
+
+
 
   // Create a state variable to store user ratings for saved Pokemon
   const [userRatings, setUserRatings] = useState({});
@@ -25,6 +27,7 @@ const SavedPokemon = () => {
   };
 
   // create function that accepts the Pokémon's mongo _id value as param and deletes the Pokémon from the database
+
   const handleDeletePokemon = async (pokemon) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -37,7 +40,10 @@ const SavedPokemon = () => {
         variables: { pokeId: pokemon.pokeId },
       });
       console.log(response);
+
+
       // upon success, remove Pokémon's id from localStorage
+
       removePokemonId(pokemon.pokeId);
     } catch (err) {
       console.error(err);
@@ -54,16 +60,23 @@ const SavedPokemon = () => {
     <>
       <div className="p-5">
         <Container>
-          <img src={Ash} alt="logo" className="d-flex justify-content-center align-items-center hero-dimension" />
+          <img
+            src={Ash}
+            alt="logo"
+            className="d-flex justify-content-center align-items-center hero-dimension"
+          />
         </Container>
       </div>   
       <Container>
         <h2 className="pt-5 d-flex justify-content-center align-items-center">
           {userData?.savedPokemon?.length
             ? `Viewing ${userData.savedPokemon.length} saved ${
+
+
                 userData.savedPokemon.length === 1 ? "Pokémon" : "Pokémons"
               }`
             : "You haven't selected any Pokémon :("}
+
         </h2>
         <Row>
           {userData?.savedPokemon?.map((pokemon) => {
@@ -100,7 +113,11 @@ const SavedPokemon = () => {
                       className="btn-block btn-danger"
                       onClick={() => handleDeletePokemon(pokemon)}
                     >
+
+                    
+
                       Delete this Pokémon!
+
                     </Button>
                   </Card.Body>
                 </Card>

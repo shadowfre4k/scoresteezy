@@ -36,6 +36,7 @@ export const SAVE_POKEMON = gql`
         pokedex
         image
         price
+        rating
       }
     }
   }
