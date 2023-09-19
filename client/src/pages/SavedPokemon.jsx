@@ -4,67 +4,48 @@ import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import { QUERY_ME } from "../utils/queries";
 import { REMOVE_POKEMON } from "../utils/mutations";
 import Auth from "../utils/auth";
-import { removePokemonId, getSavedPokemonIds, savePokemonIds } from "../utils/localStorage";
+import { removePokemonId } from "../utils/localStorage";
 import Ash from "../assets/pokemon-23.svg";
 
 const SavedPokemon = () => {
   const { loading, data } = useQuery(QUERY_ME);
   const [removePokemon] = useMutation(REMOVE_POKEMON);
-
   const userData = data?.me || {};
-  
-  // Get saved Pokémon IDs from localStorage
-  const savedPokemonIds = getSavedPokemonIds();
 
-  // Create a state variable to store user ratings for saved Pokemon
-  const [userRatings, setUserRatings] = useState({});
+  // Initialize ratings state from local storage or default to an empty object
+  const [userRatings, setUserRatings] = useState(
+    JSON.parse(localStorage.getItem("userRatings")) || {}
+  );
 
+  // Update local storage whenever userRatings changes
   useEffect(() => {
-    // Load user ratings from localStorage when the component mounts
-    const storedRatings = localStorage.getItem("userRatings");
-    if (storedRatings) {
-      setUserRatings(JSON.parse(storedRatings));
-    }
-  }, []);
+    localStorage.setItem("userRatings", JSON.stringify(userRatings));
+  }, [userRatings]);
 
   // Function to handle user rating input
   const handleRatingChange = (pokeId, rating) => {
-    const updatedRatings = {
+    setUserRatings({
       ...userRatings,
       [pokeId]: rating,
-    };
-
-    // Update user ratings state
-    setUserRatings(updatedRatings);
-
-    // Save updated ratings to localStorage
-    localStorage.setItem("userRatings", JSON.stringify(updatedRatings));
+    });
   };
 
   // create function that accepts the Pokémon's mongo _id value as param and deletes the Pokémon from the database
   const handleDeletePokemon = async (pokemon) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
-
     if (!token) {
       return false;
     }
-
     try {
       const response = await removePokemon({
         variables: { pokeId: pokemon.pokeId },
       });
       console.log(response);
-
       // upon success, remove Pokémon's id from localStorage
       removePokemonId(pokemon.pokeId);
-
-      // Remove the deleted Pokémon from the user ratings state
-      const updatedRatings = { ...userRatings };
-      delete updatedRatings[pokemon.pokeId];
-      setUserRatings(updatedRatings);
-
-      // Save updated ratings to localStorage
-      localStorage.setItem("userRatings", JSON.stringify(updatedRatings));
+      // Remove the rating for the deleted Pokémon from userRatings state
+      const { [pokemon.pokeId]: deletedRating, ...newUserRatings } = userRatings;
+      setUserRatings(newUserRatings);
     } catch (err) {
       console.error(err);
     }
@@ -108,9 +89,7 @@ const SavedPokemon = () => {
                     />
                   ) : null}
                   <Card.Body>
-
                     <Card.Title>
-
                       <a
                         href={`https://www.google.com/search?q=${encodeURIComponent(
                           pokemon.name
@@ -120,7 +99,6 @@ const SavedPokemon = () => {
                       >
                         {pokemon.name}
                       </a>
-
                     </Card.Title>
                     <Card.Text className="text-shadow">
                       Pokedex #{pokemon.pokedex}
@@ -128,9 +106,6 @@ const SavedPokemon = () => {
                     <Card.Text className="text-shadow">
                       {pokemon.description}
                     </Card.Text>
-                        </Card.Title>
-                    <Card.Text className="text-shadow">Pokedex #{pokemon.pokedex}</Card.Text>
-                    <Card.Text className="text-shadow">{pokemon.description}</Card.Text>
                     <Card.Text className="text-shadow">
                       Rating:{" "}
                       <select
@@ -152,11 +127,8 @@ const SavedPokemon = () => {
                     </Card.Text>
                     <Button
                       className="btn-block btn-info button"
-
                       onClick={() => handleDeletePokemon(pokemon)}
                     >
-                      onClick={() => handleDeletePokemon(pokemon)}>
-
                       Delete this Pokémon!
                     </Button>
                   </Card.Body>
@@ -169,7 +141,6 @@ const SavedPokemon = () => {
     </>
   );
 };
-
 export default SavedPokemon;
 
 
@@ -183,18 +154,12 @@ export default SavedPokemon;
 // import Auth from "../utils/auth";
 // import { removePokemonId } from "../utils/localStorage";
 // import Ash from "../assets/pokemon-23.svg";
-
 // const SavedPokemon = () => {
 //   const { loading, data } = useQuery(QUERY_ME);
 //   const [removePokemon] = useMutation(REMOVE_POKEMON);
-
 //   const userData = data?.me || {};
-
-
-
 //   // Create a state variable to store user ratings for saved Pokemon
 //   const [userRatings, setUserRatings] = useState({});
-
 //   // Function to handle user rating input
 //   const handleRatingChange = (pokeId, rating) => {
 //     setUserRatings({
@@ -202,36 +167,27 @@ export default SavedPokemon;
 //       [pokeId]: rating,
 //     });
 //   };
-
 //   // create function that accepts the Pokémon's mongo _id value as param and deletes the Pokémon from the database
-
 //   const handleDeletePokemon = async (pokemon) => {
 //     const token = Auth.loggedIn() ? Auth.getToken() : null;
-
 //     if (!token) {
 //       return false;
 //     }
-
 //     try {
 //       const response = await removePokemon({
 //         variables: { pokeId: pokemon.pokeId },
 //       });
 //       console.log(response);
-
-
 //       // upon success, remove Pokémon's id from localStorage
-
 //       removePokemonId(pokemon.pokeId);
 //     } catch (err) {
 //       console.error(err);
 //     }
 //   };
-
 //   // if data isn't here yet, say so
 //   if (loading) {
 //     return <h2>LOADING...</h2>;
 //   }
-
 //   // Display number of saved Pokémon, if no Pokémon saved return "You haven't selected any Pokémon"
 //   return (
 //     <>
@@ -248,18 +204,16 @@ export default SavedPokemon;
 //         <h2 className="pt-5 d-flex justify-content-center align-items-center">
 //           {userData?.savedPokemon?.length
 //             ? `Viewing ${userData.savedPokemon.length} saved ${
-
-
 //                 userData.savedPokemon.length === 1 ? "Pokémon" : "Pokémons"
 //               }`
 //             : "You haven't selected any Pokémon :("}
 
 //         </h2>
-//         <Row>
+//         <Row className="card-gap">
 //           {userData?.savedPokemon?.map((pokemon) => {
 //             return (
 //               <Col key={pokemon.pokeId} md="4">
-//                 <Card border="dark">
+//                 <Card border="dark" className="card-color">
 //                   {pokemon.image ? (
 //                     <Card.Img
 //                       src={pokemon.image}
@@ -268,12 +222,23 @@ export default SavedPokemon;
 //                     />
 //                   ) : null}
 //                   <Card.Body>
-//                     <Card.Title>{pokemon.name}</Card.Title>
-//                     <p className="small">Authors: {pokemon.name}</p>
-//                     <Card.Text>{pokemon.description}</Card.Text>
-//                     <Card.Text>
+//                     <Card.Title> 
+//                       <a
+//                         href={`https://www.google.com/search?q=${encodeURIComponent(
+//                           pokemon.name
+//                         )}`}
+//                         target="_blank"
+//                         rel="noopener noreferrer"
+//                       >
+//                         {pokemon.name}
+//                       </a>
+//                         </Card.Title>
+//                     <Card.Text className="text-shadow">Pokedex #{pokemon.pokedex}</Card.Text>
+//                     <Card.Text className="text-shadow">{pokemon.description}</Card.Text>
+//                     <Card.Text className="text-shadow">
 //                       Rating:{" "}
 //                       <select
+//                         className="rating-button"
 //                         value={userRatings[pokemon.pokeId] || 0}
 //                         onChange={(e) =>
 //                           handleRatingChange(pokemon.pokeId, parseInt(e.target.value))
@@ -287,14 +252,9 @@ export default SavedPokemon;
 //                       </select>
 //                     </Card.Text>
 //                     <Button
-//                       className="btn-block btn-danger"
-//                       onClick={() => handleDeletePokemon(pokemon)}
-//                     >
-
-                    
-
+//                       className="btn-block btn-info button"
+//                       onClick={() => handleDeletePokemon(pokemon)}>
 //                       Delete this Pokémon!
-
 //                     </Button>
 //                   </Card.Body>
 //                 </Card>
@@ -306,7 +266,5 @@ export default SavedPokemon;
 //     </>
 //   );
 // };
-
 // export default SavedPokemon;
-
 
