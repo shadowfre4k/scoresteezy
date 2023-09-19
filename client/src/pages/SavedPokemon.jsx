@@ -78,11 +78,11 @@ const SavedPokemon = () => {
             : "You haven't selected any Pokémon :("}
 
         </h2>
-        <Row>
+        <Row className="card-gap">
           {userData?.savedPokemon?.map((pokemon) => {
             return (
               <Col key={pokemon.pokeId} md="4">
-                <Card border="dark">
+                <Card border="dark" className="card-color">
                   {pokemon.image ? (
                     <Card.Img
                       src={pokemon.image}
@@ -91,12 +91,23 @@ const SavedPokemon = () => {
                     />
                   ) : null}
                   <Card.Body>
-                    <Card.Title>{pokemon.name}</Card.Title>
-                    <p className="small">Authors: {pokemon.name}</p>
-                    <Card.Text>{pokemon.description}</Card.Text>
-                    <Card.Text>
+                    <Card.Title> 
+                      <a
+                        href={`https://www.google.com/search?q=${encodeURIComponent(
+                          pokemon.name
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {pokemon.name}
+                      </a>
+                        </Card.Title>
+                    <Card.Text className="text-shadow">Pokedex #{pokemon.pokedex}</Card.Text>
+                    <Card.Text className="text-shadow">{pokemon.description}</Card.Text>
+                    <Card.Text className="text-shadow">
                       Rating:{" "}
                       <select
+                        className="rating-button"
                         value={userRatings[pokemon.pokeId] || 0}
                         onChange={(e) =>
                           handleRatingChange(pokemon.pokeId, parseInt(e.target.value))
@@ -110,14 +121,9 @@ const SavedPokemon = () => {
                       </select>
                     </Card.Text>
                     <Button
-                      className="btn-block btn-danger"
-                      onClick={() => handleDeletePokemon(pokemon)}
-                    >
-
-                    
-
+                      className="btn-block btn-info button"
+                      onClick={() => handleDeletePokemon(pokemon)}>
                       Delete this Pokémon!
-
                     </Button>
                   </Card.Body>
                 </Card>
