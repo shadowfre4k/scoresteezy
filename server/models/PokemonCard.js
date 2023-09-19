@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-// This is a subdocument schema, it won't become its own model but we'll use it as the schema for the User's `savedBooks` array in User.js
+// This is a subdocument schema, it won't become its own model but we'll use it as the schema for the User's `savedPokemon` array in User.js
 // Name, price, comments, rating
 const pokeSchema = new mongoose.Schema({
   name: {

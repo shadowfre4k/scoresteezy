@@ -14,6 +14,7 @@ const typeDefs = gql`
     pokedex: Int
     price: Float
     image: String
+    rating: Int
   }
 
   type Auth {
@@ -27,6 +28,7 @@ const typeDefs = gql`
     pokedex: Int
     price: Float
     image: String
+    rating: Int
   }
 
   type Query {
