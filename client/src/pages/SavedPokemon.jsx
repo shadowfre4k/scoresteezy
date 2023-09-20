@@ -59,7 +59,7 @@ const SavedPokemon = () => {
   // Display number of saved Pokémon, if no Pokémon saved return "You haven't selected any Pokémon"
   return (
     <>
-      <div className="p-5">
+      <div className="p-5 heroGif">
         <Container>
           <img
             src={Ash}
@@ -72,7 +72,8 @@ const SavedPokemon = () => {
         <h2 className="pt-5 d-flex justify-content-center align-items-center">
           {userData?.savedPokemon?.length
             ? `Viewing ${userData.savedPokemon.length} saved ${
-                userData.savedPokemon.length === 1 ? "Pokémon" : "Pokémons"
+                userData.savedPokemon.length === 1 ? "Pokémon" : "Pokémon"
+
               }`
             : "You haven't selected any Pokémon :("}
         </h2>
@@ -109,7 +110,7 @@ const SavedPokemon = () => {
                     <Card.Text className="text-shadow">
                       Rating:{" "}
                       <select
-                        className="rating-button"
+                        className="rating-button rating"
                         value={userRatings[pokemon.pokeId] || 0}
                         onChange={(e) =>
                           handleRatingChange(
