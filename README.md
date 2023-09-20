@@ -44,6 +44,14 @@
 
 
 
+![Screenshot (74)](https://github.com/shadowfre4k/scoresteezy/assets/128006949/f02d5c43-a7f5-4298-a9f6-892c05d392c0)
+![Screenshot (78)](https://github.com/shadowfre4k/scoresteezy/assets/128006949/10e42fa7-5b44-4be9-b014-505229e42009)
+![Screenshot (77)](https://github.com/shadowfre4k/scoresteezy/assets/128006949/359b5c26-b307-43ec-8726-5f53d0736f27)
+![Screenshot (76)](https://github.com/shadowfre4k/scoresteezy/assets/128006949/bde972ed-e449-479d-8e05-6f299ad20fe9)
+![Screenshot (79)](https://github.com/shadowfre4k/scoresteezy/assets/128006949/0f51c641-ede2-4e2f-97d3-7f8243316477)
+
+
+
 ## Sources
 
 **UCSD's coding bootcamp curriculum/challenges**
